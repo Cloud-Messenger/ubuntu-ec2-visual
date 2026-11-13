@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ubuntu Server on AWS EC2 – From Virtual Machine to Live Website</title>
+<meta name="description" content="Interactive, animated visual guide: launch an Ubuntu 24.04 EC2 instance, connect with SSH, install NGINX and host a streaming-style landing page. Created by Cloud Messenger™.">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animation.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<a class="skip" href="#stageCard">Skip to visualization</a>
+
+<header class="top">
+  <div class="brand">
+    <img src="assets/icons/logo.svg" width="38" height="38" alt="">
+    <div>
+      <h1>Ubuntu Server on AWS EC2 <span>From Virtual Machine to Live Website</span></h1>
+      <p class="tag">Learn • Build • Visualize • Troubleshoot • Grow</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <span class="sim-badge" title="Everything on this page is a simulation. No real AWS resources are created.">● SIMULATION · no real AWS calls</span>
+    <div class="seg" role="group" aria-label="Explanation level">
+      <button id="modeB" class="on" type="button" aria-pressed="true">Beginner</button>
+      <button id="modeT" type="button" aria-pressed="false">Technical</button>
+    </div>
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="Toggle light / dark theme">🌙</button>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="side" aria-label="Learning steps">
+    <div class="side-head">
+      <strong>Your journey</strong>
+      <span id="pct" class="pct">0%</span>
+    </div>
+    <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="prog"><i id="progFill"></i></div>
+    <ol id="stepList" class="steps"></ol>
+    <div class="controls">
+      <button id="prevBtn" type="button" title="Previous step (←)">◀ Prev</button>
+      <button id="playBtn" type="button" class="primary" title="Play / Pause autoplay (Space)">▶ Play</button>
+      <button id="nextBtn" type="button" title="Next step (→)">Next ▶</button>
+      <button id="resetBtn" type="button" title="Reset to step 1">↺ Reset</button>
+    </div>
+    <div class="tick" title="Autoplay advances every 5 seconds"><i id="tickFill"></i></div>
+    <p class="tick-lbl" id="tickLbl">Autoplay off · every 5 s</p>
+    <button id="finalBtn" type="button" class="final-btn">🎬 Watch the final animation</button>
+  </aside>
+
+  <main class="main">
+    <section class="card stage-card" id="stageCard" aria-label="Animated architecture diagram">
+      <div class="stage-bar">
+        <div><span id="stageNo" class="stage-no">1</span> <strong id="stageTitle"></strong></div>
+        <span id="beatLabel" class="beat-label" aria-live="polite"></span>
+      </div>
+      <svg id="stage" viewBox="0 0 1000 560" role="img" aria-labelledby="stageT" preserveAspectRatio="xMidYMid meet">
+        <title id="stageT">Animated AWS EC2 architecture</title>
+        <defs>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="gAws" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb84d"/><stop offset="1" stop-color="#ff7a00"/></linearGradient>
+          <linearGradient id="gUbu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a5c"/><stop offset="1" stop-color="#d63c0c"/></linearGradient>
+          <linearGradient id="gNgx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2fe08a"/><stop offset="1" stop-color="#00903f"/></linearGradient>
+        </defs>
+        <g id="scene"></g>
+      </svg>
+    </section>
+
+    <div class="row2">
+      <section class="card caption" id="caption" aria-label="Learning caption card">
+        <div class="cap-head">
+          <h2 id="capTitle"></h2>
+          <p id="capStory" class="story"></p>
+        </div>
+        <div class="tabs" role="tablist" id="capTabs">
+          <button role="tab" data-tab="learn" class="on" type="button">Learn</button>
+          <button role="tab" data-tab="cmd" type="button">Commands &amp; Output</button>
+          <button role="tab" data-tab="pit" type="button">Pitfalls &amp; Tips</button>
+          <button role="tab" data-tab="int" type="button">Interview</button>
+        </div>
+        <div id="capBody" class="cap-body"></div>
+      </section>
+
+      <section class="card preview" id="previewCard" aria-label="Website preview">
+        <div class="pv-head"><strong>Website preview</strong><span id="pvState" class="pv-state"></span></div>
+        <div class="browser">
+          <div class="b-bar"><i></i><i></i><i></i><span class="url" id="pvUrl">http://203.0.113.25</span></div>
+          <iframe id="pvFrame" title="Website preview (simulated browser)" loading="lazy"></iframe>
+        </div>
+        <p class="pv-note" id="pvNote"></p>
+      </section>
+    </div>
+
+    <section class="card term" id="termCard" aria-label="Interactive terminal" hidden>
+      <div class="term-head"><strong>Interactive terminal</strong><span class="sim-mini">simulated · type or click a command</span></div>
+      <div class="term-wrap">
+        <div class="term-out" id="termOut" role="log" aria-live="polite"></div>
+        <div class="term-line"><span id="termPrompt" class="term-prompt">$</span><input id="termIn" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Terminal command input"></div>
+      </div>
+      <div class="explorer-lbl">Command explorer: click a command to run it</div>
+      <div id="termExplorer" class="explorer"></div>
+    </section>
+
+    <section class="card ts" id="tsCard" aria-label="Troubleshooting control room" hidden>
+      <div id="tsRoot"></div>
+    </section>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="foot-brand">
+    <strong>Created by: Cloud Messenger™</strong>
+    <span>Learn • Build • Visualize • Troubleshoot • Grow</span>
+    <span>#buildwithCloud-Messenger</span>
+  </div>
+  <nav class="foot-links" aria-label="Cloud Messenger links">
+    <a href="https://cloudmessenger.in/" target="_blank" rel="noopener">Website</a>
+    <a href="https://www.linkedin.com/in/ulhas-narwade-aws-certified-devops" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/Cloud-Messenger" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+  <p>Made with care by Cloud Messenger™ · © 2026 Cloud Messenger. All rights reserved.</p>
+  <p class="fine">The compilation, educational structure, original visualizations, layout and branding are the original work of Cloud Messenger. Third-party trademarks, logos and properly licensed assets remain the property of their respective owners. AWS, Amazon EC2, Ubuntu and NGINX are trademarks of their respective owners; this is an independent educational project. “CloudFlix” is a fictional, original demo brand inspired by the look of streaming apps and is not affiliated with any streaming company. Everything here is a simulation: no real AWS resources are created from your browser.</p>
+</footer>
+
+<div id="final" class="final" role="dialog" aria-modal="true" aria-label="Final animation" hidden>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <button id="finalClose" class="final-close" type="button" aria-label="Close final animation">✕</button>
+  <div class="final-inner">
+    <ol id="finalStack" class="stack"></ol>
+    <div id="finalMsg" class="final-msg">
+      <h2>🎉 Congratulations!</h2>
+      <p>You have successfully built your own Ubuntu Cloud Server on AWS EC2 and hosted your first website!</p>
+      <div class="browser big"><div class="b-bar"><i></i><i></i><i></i><span class="url">http://203.0.113.25</span></div><iframe id="finalFrame" title="Live website preview" loading="lazy"></iframe></div>
+      <div class="final-actions"><button id="finalReplay" type="button">↺ Replay</button><button id="finalDone" type="button" class="primary">Close</button></div>
+      <p class="fine">Simulation complete. Next: do it for real in your own AWS account (see README → AWS EC2 Ubuntu deployment guide).</p>
+    </div>
+  </div>
+</div>
+
+<script src="js/steps.js"></script>
+<script src="js/animation.js"></script>
+<script src="js/terminal.js"></script>
+<script src="js/troubleshooting.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

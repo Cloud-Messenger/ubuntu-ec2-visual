@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CloudFlix – Demo Streaming Landing Page</title>
+<meta name="description" content="CloudFlix: an original, Netflix-inspired demo landing page served by NGINX on Ubuntu EC2. Educational project by Cloud Messenger.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23e50914'/%3E%3Cpath d='M12 8l12 8-12 8z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav" id="nav">
+  <a class="logo" href="#top" aria-label="CloudFlix home">CLOUD<span>FLIX</span></a>
+  <nav class="links" aria-label="Primary">
+    <a href="#top" class="active">Home</a><a href="#trending">Trending</a><a href="#browse">Browse</a><a href="#mylist">My List</a>
+  </nav>
+  <div class="right">
+    <label class="search"><span class="sr">Search titles</span>
+      <input id="search" type="search" placeholder="Search titles…" autocomplete="off"></label>
+    <span class="avatar" title="Demo profile">CM</span>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-label="Featured title">
+    <div class="hero-bg"></div>
+    <div class="hero-copy">
+      <span class="badge">C ORIGINAL SERIES</span>
+      <h1>Midnight Protocol</h1>
+      <p class="meta"><b class="match">98% Match</b> <span>2026</span> <span class="rating">TV-14</span> <span>3 Seasons</span></p>
+      <p class="desc">A cloud engineer discovers a server that answers requests from the future. Every packet she traces leads deeper into a network no one remembers building.</p>
+      <div class="btns">
+        <button class="btn play" id="playBtn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z" fill="currentColor"/></svg> Play</button>
+        <button class="btn info" id="infoBtn"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> More Info</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="chips" id="chips" role="tablist" aria-label="Categories"></div>
+
+  <section class="row" id="trending"><h2>Trending Now</h2><div class="track" id="trendTrack"></div></section>
+  <section class="row" id="browse"><h2 id="browseTitle">Browse All</h2><div class="grid" id="grid"></div><p class="empty" id="empty" hidden>No titles match your search.</p></section>
+  <section class="row" id="mylist"><h2>My List</h2><div class="track" id="listTrack"></div><p class="empty" id="listEmpty">Your list is empty. Hover a title and press + to add it.</p></section>
+</main>
+
+<footer class="foot">
+  <p><b>Demo page.</b> CloudFlix is a fictional, original design inspired by the look of streaming apps. Not affiliated with or endorsed by any streaming company.</p>
+  <p>Served by <b>NGINX</b> on <b>Ubuntu 24.04 LTS</b> · AWS EC2 · Created by Cloud Messenger™ · #buildwithCloud-Messenger</p>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" hidden>
+  <div class="card">
+    <button class="close" id="mClose" aria-label="Close">×</button>
+    <div class="mposter" id="mPoster"></div>
+    <div class="mbody">
+      <h3 id="mTitle"></h3>
+      <p class="meta" id="mMeta"></p>
+      <p id="mDesc"></p>
+      <div class="player" id="player" hidden><div class="bar"><i id="barFill"></i></div><span id="playTxt">Now playing (demo)…</span></div>
+      <div class="btns"><button class="btn play" id="mPlay">▶ Play</button><button class="btn info" id="mList">+ My List</button></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
